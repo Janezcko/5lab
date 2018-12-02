@@ -1,0 +1,169 @@
+#include "pch.h"
+#include <stdio.h>
+#include <iostream>
+#include <clocale>
+#include <time.h>
+#include <stdlib.h>
+#include <limits.h>
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	setlocale(LC_ALL, "rus");
+
+	srand(time(NULL));
+
+	bool flag;
+	int menu = 0;
+	int i = 0, j = 0;
+	int stroki = 0, yacheika = 0, stolbci = 0;
+	int **a = NULL;
+	int wasModified = 0;
+	int menu2 = 0;
+	int zap = 2;
+	int max = INT_MIN;
+	int min = INT_MAX;
+	int kormax = 0, kormin = 0;
+	do {
+		printf("\nВыберите пункт меню \n");
+		printf("1 - ввод элементов массива \n");
+		printf("2 - обработка массива \n");
+		printf("3 - вывод элементов массива на экран \n");
+		printf("4 - выход \n\n");
+		scanf_s("%d", &menu);
+		switch (menu)
+		{
+		case 1:
+			if (zap = 1)
+			{
+				for (int i = 0; i < stroki; i = i + 1)
+				{
+					delete[] a[i];
+				}
+				delete[] a;
+			}
+			do
+			{
+				printf("Введите количество строк ");
+				flag = scanf_s("%d", &stroki);
+				if ((stroki <0 ) or (stroki > 50) or (stroki == 0))
+				{
+					flag = false;
+					printf("Ошибка\n");
+				}
+				while (getchar() != '\n');
+			} while (!flag);
+			do
+			{
+				printf("Введите количество столбцов ");
+				flag = scanf_s("%d", &stolbci);
+				if ((stolbci < 0) or (stolbci > 50) or (stolbci == 0))
+				{
+					flag = false;
+					printf("Ошибка\n");
+				}
+				while (getchar() != '\n');
+			} while (!flag);
+			a = new int*[stroki];
+			for (int i = 0; i < stroki; i = i + 1)
+			{
+				a[i] = new int[stolbci];
+			}
+			zap = 1;
+			do
+			{
+				printf("Заполнить массив: 1 - случайными числами, 2 - собственными ");
+				flag = scanf_s("%d", &menu2);
+				if ((menu2 < 1) or (menu2 > 2))
+				{
+					flag = false;
+					printf("Ошибка\n");
+				}
+				while (getchar() != '\n');
+			} while (!flag);
+			switch (menu2)
+			{
+			case 1:
+				for (int i = 0; i < stroki; i = i + 1)
+				{
+					for (int j = 0; j < stolbci; j = j + 1)
+					{
+						a[i][j] = rand() % 10;
+					}
+				}
+				break;
+			case 2:
+				for (int i = 0; i < stroki; i = i + 1)
+				{
+					for (int j = 0; j < stolbci; j = j + 1)
+					{
+						do
+						{
+							flag = scanf_s("%d", &a[i][j]);
+							if ((a[i][j] < INT_MIN) or (a[i][j] > INT_MAX) or (flag == false))
+							{
+								printf("Ошибка\n");
+								flag = false;
+							}
+							while (getchar() != '\n');
+						} while (!flag);
+					}
+				}
+				break;
+			} break;
+		case 2:
+			if (zap == 1)
+			{
+				for (int i = 0; i < stroki; i = i + 1)
+				{
+					for (int j = 0; j < stolbci; j = j + 1)
+					{
+						if (a[i][j] > max)
+						{
+							max = a[i][j];
+							kormax = j;
+						}
+						if (a[i][j] < min)
+						{
+							min = a[i][j];
+							kormin = j;
+						}
+					}
+					a[i][kormax] = min;
+					a[i][kormin] = max;
+					max = INT_MIN;
+					min = INT_MAX;
+				}
+			} else
+				{
+					printf("Массив не заполнен, обрабатывать нечего\n");
+				} break;
+		case 3:
+			printf("\n");
+			if (zap == 1)
+			{
+				for (int i = 0; i < stroki; i = i + 1)
+				{
+					for (int j = 0; j < stolbci; j = j + 1)
+					{
+						printf_s("%d ", a[i][j]);
+					}
+					printf_s("\n");
+				}
+			}
+			else
+			{
+				printf("Массив не заполнен, выводить нечего\n");
+			}
+			break;
+		}
+
+	} while (menu != 4);
+	for (int i = 0; i < stroki; i = i + 1)
+	{
+		delete[] a[i];
+	}
+	delete[] a;
+	getchar();
+	return 0;
+}
