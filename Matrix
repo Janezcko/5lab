@@ -112,6 +112,32 @@ int main()
 				break;
 			} break;
 		case 2:
+		if (zap == 1) 
+{ 
+for (int i = 0; i < stroki; i = i + 1) 
+{ 
+for (int j = 0; j < stolbci; j = j + 1) 
+{ 
+if (a[i][j] > max) 
+{ 
+max = a[i][j]; 
+kormax = j; 
+} 
+if (a[i][j] < min) 
+{ 
+min = a[i][j]; 
+kormin = j; 
+} 
+} 
+a[i][kormax] = min; 
+a[i][kormin] = max; 
+max = INT_MIN; 
+min = INT_MAX; 
+} 
+} else 
+{ 
+printf("Массив не заполнен, обрабатывать нечего\n"); 
+}
 			 break;
 		case 3:
 			printf("\n");
